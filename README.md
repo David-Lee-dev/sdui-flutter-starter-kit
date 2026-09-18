@@ -2,7 +2,7 @@
 
 A Flutter project for server-driven UI (SDUI): screens are **YAML
 templates on the server**, compiled to JSON and rendered by the
-[`sdui_engine`](../91_sdui-starter/flutter-engine) package — ship UI changes
+[`sdui_engine`](../92_sdui-flutter-engine) package — ship UI changes
 without app releases.
 
 The reusable pieces (the engine and the template compilers in TS/Python/Go)

@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
 
   sdui_engine:
-    path: ../91_sdui-starter/flutter-engine
+    path: ../92_sdui-flutter-engine
 
   cupertino_icons: ^1.0.8
   flutter_secure_storage: ^9.2.4
