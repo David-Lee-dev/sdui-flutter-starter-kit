@@ -12,7 +12,7 @@ import '../support/engine_harness.dart';
 /// render and act end-to-end.
 void main() {
   final fixturesDir =
-      '${Directory.current.path}/../91_sdui-starter/spec/fixtures/basic/expected';
+      '${Directory.current.path}/../91_sdui-template-compiler/spec/fixtures/basic/expected';
 
   Map<String, Object?> loadTemplate(String screen) {
     final raw = File(

@@ -6,7 +6,7 @@ templates on the server**, compiled to JSON and rendered by the
 without app releases.
 
 The reusable pieces (the engine and the template compilers in TS/Python/Go)
-live in [`91_sdui-starter`](../91_sdui-starter); this repo is the app itself —
+live in [`91_sdui-template-compiler`](../91_sdui-template-compiler); this repo is the app itself —
 a runnable Flutter project plus example templates and a tiny example server.
 
 ```
@@ -31,7 +31,7 @@ a runnable Flutter project plus example templates and a tiny example server.
 
 ```sh
 # 1. Build the compiler (once) and compile the example screens
-cd ../91_sdui-starter/js-cplr && pnpm install && pnpm build
+cd ../91_sdui-template-compiler/js-cplr && pnpm install && pnpm build
 node dist/cli.js ../../08_flutter-sdui-starter-kit/examples/sdui \
   --out ../../08_flutter-sdui-starter-kit/examples/serve-js/composed
 
@@ -80,4 +80,4 @@ flutter test   # app impls + example screens mounted in the real engine
 ```
 
 Engine and compiler suites live with their packages — see
-[`91_sdui-starter`](../91_sdui-starter#compilers).
+[`91_sdui-template-compiler`](../91_sdui-template-compiler#compilers).
