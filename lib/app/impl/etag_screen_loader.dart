@@ -39,7 +39,7 @@ final class EtagScreenLoader implements ScreenLoader {
   Future<LoadedScreen> load(String screenId) async {
     final cached = _cache[screenId];
     final response = await _client.get(
-      Uri.parse('$baseUrl/v3/screens/$screenId'),
+      Uri.parse('$baseUrl/screens/$screenId'),
       headers: {
         'x-app-version': ?appVersion,
         if (cached != null) 'if-none-match': cached.etag,

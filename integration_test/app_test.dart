@@ -4,8 +4,8 @@ import 'package:integration_test/integration_test.dart';
 import 'package:sdui_starter/main.dart' as app;
 
 /// On-device end-to-end: boots the real app against a running example server
-/// (`node examples/serve-js/server.mjs 8080` — or any server exposing the
-/// same screens) and walks the home -> detail flow through real HTTP,
+/// (`node scripts/serve_example.mjs` — or any server exposing the same
+/// screens) and walks the home -> detail flow through real HTTP,
 /// real engine, real gestures.
 ///
 /// Run on a simulator/emulator:

@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 /// Registry of media assets bundled with the app.
 ///
 /// Loaded once at boot from the AssetManifest: every file under
-/// `assets/images/` and `assets/videos/` is indexed by hashed basename so the
-/// media sources can answer "is this bundled?" synchronously. Templates send
-/// hashed asset URLs (`/assets/a1b2c3d4.png`); a bundled copy is used
-/// directly, anything else falls back to the server — ship the popular assets
-/// inside the app and the screen renders without a network round-trip.
+/// `assets/images/` and `assets/videos/` is indexed by basename so the media
+/// sources can answer "is this bundled?" synchronously. When a template's
+/// media src names a file that ships inside the app (`/assets/logo.png`,
+/// `logo.png`), the bundled copy renders with no network round-trip; anything
+/// else falls back to the server.
 class BundledAssetRegistry {
   BundledAssetRegistry._();
 
@@ -16,14 +16,6 @@ class BundledAssetRegistry {
 
   /// Bundle locations indexed at [init].
   static const List<String> prefixes = ['assets/images/', 'assets/videos/'];
-
-  /// Hashed-filename match, both shapes templates use:
-  ///   bare:      `abc12345.png`
-  ///   prefixed:  `/assets/abc12345.png`
-  /// Capture group 1 = basename (`abc12345.png`).
-  static final RegExp _hashedAssetPattern = RegExp(
-    r'^(?:/assets/)?([0-9a-f]{8}\.[a-zA-Z0-9]+)$',
-  );
 
   Map<String, String> _bundled = const {};
 
@@ -44,13 +36,17 @@ class BundledAssetRegistry {
 
   String pathOf(String filename) => _bundled[filename]!;
 
-  /// Returns the hashed basename when [url] points at a hash asset, else null.
-  static String? hashedFilename(String url) =>
-      _hashedAssetPattern.firstMatch(url)?.group(1);
+  /// Returns the basename a media src would match in the bundle, or null for
+  /// srcs that cannot be bundle-relative (absolute http(s) URLs).
+  static String? basenameOf(String src) {
+    if (src.startsWith('http')) return null;
+    final basename = src.split('/').last;
+    return basename.isEmpty ? null : basename;
+  }
 
-  /// Whether [url] points at a hash asset that is actually bundled.
-  bool hasUrl(String url) {
-    final filename = hashedFilename(url);
-    return filename != null && has(filename);
+  /// Whether [src] names a file that is actually bundled.
+  bool hasUrl(String src) {
+    final basename = basenameOf(src);
+    return basename != null && has(basename);
   }
 }

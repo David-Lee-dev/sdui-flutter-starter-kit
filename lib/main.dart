@@ -5,7 +5,7 @@ import 'package:sdui_starter/app/config/env.dart';
 import 'package:sdui_starter/app/impl/etag_screen_loader.dart';
 import 'package:sdui_starter/app/impl/bundled_asset_registry.dart';
 import 'package:sdui_starter/app/impl/device_secure_storage.dart';
-import 'package:sdui_starter/app/impl/http_api_client.dart';
+import 'package:sdui_starter/app/impl/rest_network_client.dart';
 import 'package:sdui_starter/app/impl/image_source.dart';
 import 'package:sdui_starter/app/impl/prefs_app_storage.dart';
 import 'package:sdui_starter/app/impl/video_source.dart';
@@ -27,7 +27,9 @@ Future<void> main() async {
       baseUrl: Env.serverUrl,
       appVersion: Env.appVersion,
     ),
-    apiClient: HttpApiClient(
+    // The `net` command's vocabulary is this client's: templates write
+    // classic REST fields (method / path / params / body) directly.
+    networkClient: RestNetworkClient(
       baseUrl: Env.serverUrl,
       appVersion: Env.appVersion,
     ),

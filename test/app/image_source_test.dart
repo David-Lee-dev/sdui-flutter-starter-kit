@@ -10,32 +10,26 @@ void main() {
   tearDown(() => BundledAssetRegistry.instance.seed(const {}));
 
   group('BundledAssetRegistry', () {
-    group('hashedFilename', () {
-      test('accepts bare and /assets/-prefixed hash names only', () {
+    group('basenameOf', () {
+      test('extracts the basename for bundle-relative srcs only', () {
+        expect(BundledAssetRegistry.basenameOf('/assets/logo.png'), 'logo.png');
+        expect(BundledAssetRegistry.basenameOf('logo.png'), 'logo.png');
         expect(
-          BundledAssetRegistry.hashedFilename('/assets/abc12345.png'),
-          'abc12345.png',
-        );
-        expect(
-          BundledAssetRegistry.hashedFilename('abc12345.png'),
-          'abc12345.png',
-        );
-        expect(
-          BundledAssetRegistry.hashedFilename('https://x.com/abc12345.png'),
+          BundledAssetRegistry.basenameOf('https://x.com/logo.png'),
           isNull,
         );
-        expect(BundledAssetRegistry.hashedFilename('/assets/logo.png'), isNull);
+        expect(BundledAssetRegistry.basenameOf('/assets/'), isNull);
       });
     });
 
     group('hasUrl', () {
-      test('true only for hash urls present in the bundle index', () {
+      test('true only for srcs whose basename is in the bundle index', () {
         BundledAssetRegistry.instance.seed(const {
-          'abc12345.png': 'assets/images/abc12345.png',
+          'logo.png': 'assets/images/logo.png',
         });
-        expect(BundledAssetRegistry.instance.hasUrl('/assets/abc12345.png'),
+        expect(BundledAssetRegistry.instance.hasUrl('/assets/logo.png'),
             isTrue);
-        expect(BundledAssetRegistry.instance.hasUrl('/assets/deadbeef.png'),
+        expect(BundledAssetRegistry.instance.hasUrl('/assets/other.png'),
             isFalse);
       });
     });
@@ -51,30 +45,30 @@ void main() {
         );
       });
 
-      test('번들에 있는 해시 src는 asset으로 렌더한다 (네트워크 없음)', () {
+      test('번들에 있는 src는 asset으로 렌더한다 (네트워크 없음)', () {
         BundledAssetRegistry.instance.seed(const {
-          'abc12345.png': 'assets/images/abc12345.png',
+          'logo.png': 'assets/images/logo.png',
         });
         final result = const AppImageSource(baseUrl: 'http://s')
-            .resolve(const ImageRequest(src: '/assets/abc12345.png'))
+            .resolve(const ImageRequest(src: '/assets/logo.png'))
             as ReadyImage;
         final image = result.image as Image;
         expect(image.image, isA<AssetImage>());
         expect(
           (image.image as AssetImage).assetName,
-          'assets/images/abc12345.png',
+          'assets/images/logo.png',
         );
       });
 
       test('번들에 없으면 네트워크 폴백 — 상대 경로는 baseUrl에 붙는다', () {
         final result = const AppImageSource(baseUrl: 'http://s')
-            .resolve(const ImageRequest(src: '/assets/deadbeef.png'))
+            .resolve(const ImageRequest(src: '/assets/missing.png'))
             as ReadyImage;
         final image = result.image as Image;
         expect(image.image, isA<NetworkImage>());
         expect(
           (image.image as NetworkImage).url,
-          'http://s/assets/deadbeef.png',
+          'http://s/assets/missing.png',
         );
         // 네트워크 경로에서만 로딩 폴리시(shimmer)가 붙는다.
         expect(image.loadingBuilder, isNotNull);

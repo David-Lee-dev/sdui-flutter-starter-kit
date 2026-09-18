@@ -27,10 +27,10 @@ void main() {
   ];
 
   setUp(() {
-    installTestApiClient(
-      _FakeApiClient({
-        'HomeFeed': {'items': feed},
-        'ItemDetail': {
+    installTestNetworkClient(
+      _FakeNetworkClient({
+        '/feed': {'items': feed},
+        '/items/1': {
           'item': {
             'id': 1,
             'emoji': '🚀',
@@ -83,21 +83,18 @@ void main() {
   });
 }
 
-final class _FakeApiClient implements ApiClient {
-  const _FakeApiClient(this.responses);
+final class _FakeNetworkClient implements NetworkClient {
+  const _FakeNetworkClient(this.responses);
 
   final Map<String, Object?> responses;
 
   @override
-  Future<ApiResult> execute({
-    required String query,
-    required Map<String, Object?> variables,
-    String? correlationId,
-  }) async {
-    final data = responses[query];
+  Future<NetworkResult> send(NetworkRequest request) async {
+    final path = request.fields['path'];
+    final data = responses[path];
     if (data == null) {
-      return ApiResult(errorCode: 'UNKNOWN_OP', errorMessage: query);
+      return NetworkResult(errorCode: 'NOT_FOUND', errorMessage: '$path');
     }
-    return ApiResult(data: data);
+    return NetworkResult(data: data);
   }
 }

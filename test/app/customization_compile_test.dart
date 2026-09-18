@@ -12,14 +12,14 @@ import 'package:sdui_starter/app/impl/video_source.dart';
 /// must all be expressible through the package's public API (the barrel
 /// import above — no deep imports needed).
 
-// ── 1. Custom ApiClient (replace the HTTP data plane) ──────────────────────
-final class MyGraphqlApiClient implements ApiClient {
+// ── 1. Custom NetworkClient (replace the REST data plane with GraphQL) ─────
+// The `net` command's request fields are this client's own vocabulary — a
+// GraphQL client can ask templates for `op`/`params`, `query`/`variables`,
+// or anything else it defines.
+final class MyGraphqlNetworkClient implements NetworkClient {
   @override
-  Future<ApiResult> execute({
-    required String query,
-    required Map<String, Object?> variables,
-    String? correlationId,
-  }) async => const ApiResult(data: {'ok': true});
+  Future<NetworkResult> send(NetworkRequest request) async =>
+      const NetworkResult(data: {'ok': true});
 }
 
 // ── 2. Platform capability as a service (templates call { _type: sys_clipboard })
@@ -79,7 +79,7 @@ void main() {
     void boot(LoadedScreen prewarmed) {
       Sdui.initialize(
         screenLoader: EtagScreenLoader(baseUrl: 'http://localhost:1'),
-        apiClient: MyGraphqlApiClient(),
+        networkClient: MyGraphqlNetworkClient(),
         imageSource: const AppImageSource(baseUrl: 'http://localhost:1'),
         videoSource: const AppVideoSource(baseUrl: 'http://localhost:1'),
         appStorage: _FakeAppStorage(),

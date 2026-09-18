@@ -6,7 +6,7 @@ import 'bundled_asset_registry.dart';
 /// App-owned [ImageSource] — bundled-first, network fallback.
 ///
 /// Resolution order:
-/// 1. **Bundled asset** — a hashed src (`/assets/a1b2c3d4.png`) present in
+/// 1. **Bundled asset** — a src whose basename (`/assets/logo.png`) is in
 ///    the app bundle renders from [BundledAssetRegistry] with no network.
 /// 2. **Network** — anything else loads over HTTP with the engine's loading
 ///    polish (fade-in + shimmer placeholder, exported by the package);
@@ -24,7 +24,7 @@ class AppImageSource implements ImageSource {
 
     final registry = BundledAssetRegistry.instance;
     if (registry.hasUrl(src)) {
-      final path = registry.pathOf(BundledAssetRegistry.hashedFilename(src)!);
+      final path = registry.pathOf(BundledAssetRegistry.basenameOf(src)!);
       return ReadyImage(
         Image.asset(
           path,
