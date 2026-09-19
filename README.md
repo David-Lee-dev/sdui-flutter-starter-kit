@@ -26,8 +26,9 @@ out of the box. The reusable pieces live in sibling repos:
 
 ## Quick start
 
-Clone the compiler repo as a sibling (the example screens live there as
-tested fixtures), then:
+Runs standalone from a lone clone — the compiled example screens are
+vendored in `example/compiled/` (sources to copy from are in `example/src/`,
+see `example/README.md`):
 
 ```sh
 # 1. Serve the example screens + data (dependency-free Node, one file)
@@ -39,7 +40,12 @@ flutter run
 
 Home renders a feed loaded over the `net` command; tapping a row navigates
 to `/screens/detail?id=…` — the full loop (template → data → interaction →
-navigation) with no app-side screen code.
+navigation) with no app-side screen code. `/screens/gallery` demonstrates
+bundled-first media (an `image` node rendering `assets/images/` with no
+network round-trip).
+
+To edit or add screens, check out the compiler repo as a sibling
+(`../91_sdui-template-compiler`) and recompile into `example/compiled/`.
 
 ## What to look at
 

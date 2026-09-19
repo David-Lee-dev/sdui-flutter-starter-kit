@@ -1,0 +1,35 @@
+# Gallery screen root — a bundled-first image node plus a title, proving
+# assets/images/placeholder.png resolves through AppImageSource without a
+# network round-trip. See docs on the `image` widget for the field list.
+_type: scaffold
+background_color: { .token: color.background }
+_slots:
+  app_bar:
+    _type: app_bar
+    center_title: true
+    _slots:
+      title:
+        _type: text
+        value: Gallery
+        style: { font_size: 18, font_weight: w700, color: { .token: color.white } }
+  body:
+    _type: safe_area
+    _child:
+      _type: padding
+      padding: 16
+      _child:
+        _type: column
+        cross_axis_alignment: center
+        spacing: 16
+        _children:
+          - _type: image
+            src: placeholder.png
+            width: 96
+            height: 96
+            fit: cover
+            _slots:
+              error: { _type: text, value: 'image failed to load' }
+          - _type: text
+            value: Bundled asset, no network round-trip
+            text_align: center
+            style: { font_size: 14, color: { .token: color.surface70 } }

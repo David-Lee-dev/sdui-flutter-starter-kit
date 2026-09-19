@@ -1,0 +1,37 @@
+{
+  "detail": {
+    "versions": {
+      "1.0.0": {
+        "template": "1.0.0"
+      }
+    },
+    "params": [
+      "id"
+    ],
+    "etags": {
+      "1.0.0": "8ef26a68d606cb07"
+    }
+  },
+  "gallery": {
+    "versions": {
+      "1.0.0": {
+        "template": "1.0.0"
+      }
+    },
+    "params": [],
+    "etags": {
+      "1.0.0": "64c50b7c95c02a8c"
+    }
+  },
+  "home": {
+    "versions": {
+      "1.0.0": {
+        "template": "1.0.0"
+      }
+    },
+    "params": [],
+    "etags": {
+      "1.0.0": "311f99e917c3315a"
+    }
+  }
+}

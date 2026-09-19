@@ -22,7 +22,7 @@ _scope:
   _state: { items: null }        # reactive state owned by this scope
   _action:
     load_feed:
-      _type: api                 # driver command
+      _type: net                 # driver command
       query: HomeFeed            # transport-neutral operation name
       variables: { id: '${id}' }
       _when: '${items == null}'  # guard: falsy -> skip the command
@@ -72,7 +72,7 @@ _on: { tap: { do: open_detail, event: '${item.id}' } }   # with event payload
 ## Command types
 
 Every driver is engine-owned and locked — apps cannot inject or replace
-drivers: `set`, `api` (routes to the injected `ApiClient` dependency),
+drivers: `set`, `net` (routes to the injected `NetworkClient` dependency),
 `navigate` (`route: '/screens/detail?id=${event}'`, or `method: pop` with
 optional `result`), `toast` (`message`, `variant`), `modal`, `scroll`,
 `anchoring`, `app_storage`, `secure_storage`, `sys_haptic`.

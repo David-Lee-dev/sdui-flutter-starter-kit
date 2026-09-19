@@ -1,0 +1,6 @@
+# Gallery screen — demonstrates bundled-first media: the `image` node's
+# src names an app-bundled asset, so AppImageSource renders it with no
+# network round-trip (see lib/app/impl/image_source.dart).
+id: gallery
+versions:
+  '1.0.0': { template: '1.0.0' }

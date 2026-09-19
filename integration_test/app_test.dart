@@ -21,7 +21,7 @@ void main() {
     await app.main();
     await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
-    // Home: server template rendered, feed rows arrived over the api command.
+    // Home: server template rendered, feed rows arrived over the net command.
     expect(find.text("Today's picks"), findsOneWidget);
     expect(find.text('Server-driven UI'), findsOneWidget);
 

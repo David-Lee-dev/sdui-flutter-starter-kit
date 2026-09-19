@@ -12,15 +12,23 @@
 //
 // Usage: node scripts/serve_example.mjs [port]   (default 8080)
 
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const FIXTURE = join(
-  dirname(fileURLToPath(import.meta.url)),
+const HERE = dirname(fileURLToPath(import.meta.url));
+// In-repo vendored copy first (works from a lone clone); fall back to the
+// sibling compiler checkout, which stays useful for testing against a
+// freshly-recompiled fixture without re-vendoring.
+const IN_REPO_FIXTURE = join(HERE, '../example/compiled');
+const SIBLING_FIXTURE = join(
+  HERE,
   '../../91_sdui-template-compiler/spec/fixtures/basic/expected',
 );
+const FIXTURE = existsSync(join(IN_REPO_FIXTURE, 'manifest.json'))
+  ? IN_REPO_FIXTURE
+  : SIBLING_FIXTURE;
 
 let manifest;
 try {
@@ -28,7 +36,8 @@ try {
 } catch {
   console.error(
     `Compiled example screens not found at:\n  ${FIXTURE}\n` +
-      'Check out the compiler repo as a sibling directory:\n' +
+      'Either restore example/compiled (vendored in this repo) or check out ' +
+      'the compiler repo as a sibling directory:\n' +
       '  git clone https://github.com/David-Lee-dev/sdui-template-compiler.git ../91_sdui-template-compiler',
   );
   process.exit(1);

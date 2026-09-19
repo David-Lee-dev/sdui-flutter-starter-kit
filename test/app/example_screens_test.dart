@@ -11,8 +11,21 @@ import '../support/engine_harness.dart';
 /// the YAML under `examples/sdui` and the compiler's golden output actually
 /// render and act end-to-end.
 void main() {
-  final fixturesDir =
+  // In-repo vendored copy first (works from a lone clone); fall back to the
+  // sibling compiler checkout for testing against a freshly-recompiled
+  // fixture without re-vendoring.
+  final inRepoFixturesDir = '${Directory.current.path}/example/compiled';
+  final siblingFixturesDir =
       '${Directory.current.path}/../91_sdui-template-compiler/spec/fixtures/basic/expected';
+  final fixturesDir = File('$inRepoFixturesDir/manifest.json').existsSync()
+      ? inRepoFixturesDir
+      : siblingFixturesDir;
+
+  test('resolves the vendored in-repo fixtures, not the sibling checkout', () {
+    // Self-containment: a lone clone must resolve example/compiled, which
+    // this repo vendors, never the sibling compiler checkout.
+    expect(fixturesDir, inRepoFixturesDir);
+  });
 
   Map<String, Object?> loadTemplate(String screen) {
     final raw = File(

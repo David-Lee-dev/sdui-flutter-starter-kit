@@ -8,17 +8,17 @@ developer cloning this repo to build a real app.
 
 ## HIGH — blocks or misleads a cloning developer
 
-- [ ] **Stale command vocabulary in docs/TEMPLATE-GUIDE.md** (lines 25, 75):
+- [x] **Stale command vocabulary in docs/TEMPLATE-GUIDE.md** (lines 25, 75):
       says `_type: api` routing to an "injected ApiClient" — the engine and the
       shipped fixtures use `net` / `NetworkClient`. Also
       `integration_test/app_test.dart:24` comment. Rename `api`→`net`,
       `ApiClient`→`NetworkClient`.
-- [ ] **Bundled-first media is advertised but never exercised**: no `assets/`
+- [x] **Bundled-first media is advertised but never exercised**: no `assets/`
       directory, no `assets:` in pubspec, and no image/video node in either
       example screen — `AppImageSource`/`AppVideoSource`/`BundledAssetRegistry`
       never run in the demo. Bundle one image, declare assets, add an
       image/video node to an example screen.
-- [ ] **Not runnable from a lone clone**: example screens live only in
+- [x] **Not runnable from a lone clone**: example screens live only in
       `../91_sdui-template-compiler/spec/fixtures/basic/expected` —
       `scripts/serve_example.mjs` exits and `test/app/example_screens_test.dart`
       fails without the sibling checkout, and there's no in-repo YAML to copy
