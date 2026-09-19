@@ -25,8 +25,10 @@ example/
 `compiled/` is generated from `src/` — recompile after editing the YAML:
 
 ```sh
-# Python compiler (py-cplr, from the sdui-template-compiler repo)
-python3 -m venv .venv && .venv/bin/pip install ../91_sdui-template-compiler/py-cplr
+# Python compiler — pip installs it straight from git, no checkout needed
+python3 -m venv .venv && .venv/bin/pip install \
+  "git+https://github.com/David-Lee-dev/sdui-template-compiler.git#subdirectory=py-cplr"
+# (a sibling checkout also works: pip install ../sdui-template-compiler/py-cplr)
 .venv/bin/sdui-compile example/src --out example/compiled --pretty
 
 # or the TS compiler, same contract — see the compiler repo's README
