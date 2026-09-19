@@ -1,5 +1,4 @@
 import 'package:sdui_engine/sdui_engine.dart';
-import 'package:video_player/video_player.dart';
 
 import 'bundled_asset_registry.dart';
 
@@ -15,15 +14,15 @@ class AppVideoSource implements VideoSource {
   final String baseUrl;
 
   @override
-  Future<VideoPlayerController> controllerFor(VideoRequest request) async {
+  Future<SduiVideoController> controllerFor(VideoRequest request) async {
     final src = request.src;
     final registry = BundledAssetRegistry.instance;
     if (registry.hasUrl(src)) {
-      return VideoPlayerController.asset(
+      return PlayerVideoController.asset(
         registry.pathOf(BundledAssetRegistry.basenameOf(src)!),
       );
     }
     final url = src.startsWith('http') ? src : '$baseUrl$src';
-    return VideoPlayerController.networkUrl(Uri.parse(url));
+    return PlayerVideoController.network(Uri.parse(url));
   }
 }
