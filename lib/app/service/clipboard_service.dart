@@ -72,7 +72,7 @@ class ClipboardService extends SduiService {
 /// `{ _type: sys_clipboard_copy, text: ... }` — writes [text] to the system
 /// clipboard. Returns nothing; a confirmation toast belongs to the template's
 /// `_then` flow, not here.
-class ClipboardCopyCommand implements ExternalCommand {
+class ClipboardCopyCommand extends ExternalCommand {
   const ClipboardCopyCommand();
 
   @override
@@ -107,7 +107,7 @@ class ClipboardCopyCommand implements ExternalCommand {
 ///   _error:
 ///     _: [{ _type: toast, message: 클립보드가 비어 있습니다 }]
 /// ```
-class ClipboardReadCommand implements ExternalCommand {
+class ClipboardReadCommand extends ExternalCommand {
   const ClipboardReadCommand();
 
   @override

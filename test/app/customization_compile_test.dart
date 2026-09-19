@@ -23,7 +23,7 @@ final class MyGraphqlNetworkClient implements NetworkClient {
 }
 
 // ── 2. Platform capability as a service (templates call { _type: sys_clipboard })
-final class ClipboardCommand implements ExternalCommand {
+final class ClipboardCommand extends ExternalCommand {
   @override
   String get type => 'sys_clipboard';
 
@@ -42,7 +42,7 @@ final class SupportChatService extends SduiService {
   }
 }
 
-final class _ChatCommand implements ExternalCommand {
+final class _ChatCommand extends ExternalCommand {
   @override
   String get type => 'support_chat';
 

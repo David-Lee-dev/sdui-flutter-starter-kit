@@ -9,6 +9,7 @@ import 'package:sdui_starter/app/impl/rest_network_client.dart';
 import 'package:sdui_starter/app/impl/image_source.dart';
 import 'package:sdui_starter/app/impl/prefs_app_storage.dart';
 import 'package:sdui_starter/app/impl/video_source.dart';
+import 'package:sdui_starter/app/presentation/press_tap_feedback.dart';
 import 'package:sdui_starter/app/service/clipboard_service.dart';
 
 Future<void> main() async {
@@ -37,6 +38,10 @@ Future<void> main() async {
     videoSource: const AppVideoSource(baseUrl: Env.serverUrl),
     appStorage: appStorage,
     secureStorage: const DeviceSecureStorage(),
+    // App-owned look for engine-drawn surfaces: the advanced tint+press
+    // feedback replaces the engine's stock ink ripple (press_tap_feedback.dart
+    // is the annotated example of the TapFeedback contract).
+    presentation: const SduiPresentation(tapFeedback: PressTapFeedback()),
     // App-added template capability — see clipboard_service.dart for the
     // full walkthrough of what a service and its commands are.
     services: const [ClipboardService()],
